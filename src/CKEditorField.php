@@ -24,18 +24,22 @@ class CKEditorField extends Field
 
     public function render()
     {
+        $csrf_token = csrf_token();
+
         $element= $this->getElementClassString();
         $filebrowserImageBrowseUrl = config('admin.extensions.ckeditor.filebrowserImageBrowseUrl');
         $imageBrowserUrl = $filebrowserImageBrowseUrl==null ? null :admin_url($filebrowserImageBrowseUrl);
-//        echo $imageBrowserUrl;
+
+        $filebrowserImageUploadUrl = config('admin.extensions.ckeditor.filebrowserImageUploadUrl',null);
+        $imageUploadUrl = $filebrowserImageUploadUrl == null ? null :admin_url($filebrowserImageUploadUrl);
 
         $this->script = <<<EOF
 var options= {
-filebrowserImageBrowseUrl: "{$imageBrowserUrl}"
+removeDialogTabs: 'image:advanced;image:Link',
+filebrowserImageBrowseUrl: "{$imageBrowserUrl}",
+filebrowserImageUploadUrl: "{$imageUploadUrl}?_token={$csrf_token}",
 }
 $('textarea.{$element}').ckeditor(options)
-
-console.log(CKEDITOR.tools)
 
 EOF;
 
