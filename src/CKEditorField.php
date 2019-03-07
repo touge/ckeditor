@@ -15,9 +15,9 @@ use Encore\Admin\Form\Field;
 class CKEditorField extends Field
 {
     public static $js = [
-        '//cdn.bootcss.com/ckeditor/4.11.2/ckeditor.js',
-        '//cdn.bootcss.com/ckeditor/4.11.2/adapters/jquery.js',
-        '//cdn.bootcss.com/ckeditor/4.11.2/lang/zh-cn.js',
+        'vendor/touge/ckeditor/4.11.2/ckeditor.js',
+        'vendor/touge/ckeditor/4.11.2/adapters/jquery.js',
+        'vendor/touge/ckeditor/4.11.2/lang/zh-cn.js',
     ];
 
     protected $view = 'ckeditor::ckeditor';
