@@ -28,13 +28,22 @@ class CKEditorField extends Field
         $imageBrowserUrl = $filebrowserImageBrowseUrl==null ? null :admin_url($filebrowserImageBrowseUrl);
 
         $filebrowserImageUploadUrl = config('admin.extensions.ckeditor.filebrowserImageUploadUrl',null);
-        $imageUploadUrl = $filebrowserImageUploadUrl == null ? null :admin_url($filebrowserImageUploadUrl);
+
+        $imageUploadUrl= "";
+
+        /**
+         * 此处依赖touge/oss-media插件
+         */
+        if(config("oss-media.filesystem")=="alioss")
+        {
+            $imageUploadUrl = $filebrowserImageUploadUrl == null ? null :admin_url("{$filebrowserImageUploadUrl}?_token={$csrf_token}");
+        }
 
         $this->script = <<<EOF
 var options= {
 removeDialogTabs: 'image:advanced;image:Link',
 filebrowserImageBrowseUrl: "{$imageBrowserUrl}",
-filebrowserImageUploadUrl: "{$imageUploadUrl}?_token={$csrf_token}",
+filebrowserImageUploadUrl: "{$imageUploadUrl}",
 }
 $('textarea.{$element}').ckeditor(options)
 
